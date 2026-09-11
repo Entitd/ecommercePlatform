@@ -1,4 +1,15 @@
 @php
+    $catalogItems = [
+        ['label' => 'Категории', 'href' => route('admin.categories.index')],
+        ['label' => 'Товары', 'href' => '#'],
+        ['label' => 'Фильтры', 'href' => '#'],
+        ['label' => 'Уведомления', 'href' => '#'],
+        ['label' => 'Атрибуты', 'href' => '#'],
+        ['label' => 'Опции', 'href' => '#'],
+        ['label' => 'Бренды', 'href' => '#'],
+        ['label' => 'Отзывы', 'href' => '#'],
+    ];
+
     $orders = [
         [
             'id' => '#SF-10482',
@@ -83,7 +94,7 @@
                     </span>
                 </a>
 
-                <nav class="mt-10 grid gap-1" aria-label="Навигация администратора">
+                <nav class="mt-10 grid min-h-0 flex-1 content-start gap-1 overflow-y-auto pr-1" aria-label="Навигация администратора">
                     <p class="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">основное</p>
                     <a href="#" aria-current="page" class="flex items-center gap-3 rounded-xl bg-white px-3 py-2.5 text-sm font-bold text-[#17211c]">
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2" /><rect x="14" y="3" width="7" height="7" rx="2" /><rect x="3" y="14" width="7" height="7" rx="2" /><rect x="14" y="14" width="7" height="7" rx="2" /></svg>
@@ -94,10 +105,18 @@
                         Продажи
                         <span class="ml-auto rounded-full bg-[#ff6b4a] px-2 py-0.5 text-[10px] font-bold text-white">12</span>
                     </a>
-                    <a href="#" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/60 transition hover:bg-white/8 hover:text-white">
-                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4 7 8-4 8 4-8 4-8-4Z" /><path stroke-linecap="round" stroke-linejoin="round" d="m4 12 8 4 8-4M4 17l8 4 8-4" /></svg>
-                        Каталог
-                    </a>
+                    <details class="group/catalog">
+                        <summary class="flex cursor-pointer list-none items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/60 transition hover:bg-white/8 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-lime-300 [&::-webkit-details-marker]:hidden">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4 7 8-4 8 4-8 4-8-4Z" /><path stroke-linecap="round" stroke-linejoin="round" d="m4 12 8 4 8-4M4 17l8 4 8-4" /></svg>
+                            Каталог
+                            <svg class="ml-auto size-4 transition-transform duration-200 group-open/catalog:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+                        </summary>
+                        <div class="ml-5 mt-1 grid gap-0.5 border-l border-white/10 pl-4">
+                            @foreach ($catalogItems as $catalogItem)
+                                <a href="{{ $catalogItem['href'] }}" class="rounded-lg px-3 py-2 text-xs font-medium text-white/45 transition hover:bg-white/8 hover:text-white focus-visible:outline-2 focus-visible:outline-lime-300">{{ $catalogItem['label'] }}</a>
+                            @endforeach
+                        </div>
+                    </details>
                     <a href="#" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/60 transition hover:bg-white/8 hover:text-white">
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                         Клиенты
@@ -118,7 +137,7 @@
                     </a>
                 </nav>
 
-                <div class="mt-auto rounded-2xl bg-white/7 p-3">
+                <div class="mt-4 rounded-2xl bg-white/7 p-3">
                     <div class="flex items-center gap-3">
                         <span class="grid size-10 shrink-0 place-items-center rounded-full bg-[#ffbe98] text-xs font-black text-[#17211c]">АК</span>
                         <div class="min-w-0">
@@ -141,7 +160,7 @@
                                 <svg class="size-5 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
                                 <svg class="hidden size-5 group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="m6 6 12 12M18 6 6 18" /></svg>
                             </summary>
-                            <div class="absolute left-0 top-13 w-[min(20rem,calc(100vw-2rem))] rounded-3xl border border-black/8 bg-[#17211c] p-3 text-white shadow-2xl shadow-black/20 dark:border-white/10">
+                            <div class="absolute left-0 top-13 max-h-[calc(100vh-5.5rem)] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto rounded-3xl border border-black/8 bg-[#17211c] p-3 text-white shadow-2xl shadow-black/20 dark:border-white/10">
                                 <div class="flex items-center gap-3 px-2 pb-4 pt-1">
                                     <span class="grid size-9 place-items-center rounded-full bg-lime-300 text-[#17211c]"><svg class="size-4" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 17.5 12 4l7 13.5-7-3-7 3Z" fill="currentColor" /></svg></span>
                                     <span class="text-lg font-black tracking-[-0.05em]">SFERA <span class="text-xs font-semibold tracking-normal text-white/35">ADMIN</span></span>
@@ -149,7 +168,17 @@
                                 <nav class="grid gap-1 text-sm font-medium" aria-label="Мобильная навигация администратора">
                                     <a href="#" class="rounded-xl bg-white px-3 py-2.5 font-bold text-[#17211c]">Обзор</a>
                                     <a href="#orders" class="flex items-center rounded-xl px-3 py-2.5 text-white/65 hover:bg-white/8 hover:text-white">Заказы <span class="ml-auto rounded-full bg-[#ff6b4a] px-2 py-0.5 text-[10px] font-bold text-white">12</span></a>
-                                    <a href="#" class="rounded-xl px-3 py-2.5 text-white/65 hover:bg-white/8 hover:text-white">Товары</a>
+                                    <details class="group/mobile-catalog">
+                                        <summary class="flex cursor-pointer list-none items-center rounded-xl px-3 py-2.5 text-white/65 transition hover:bg-white/8 hover:text-white [&::-webkit-details-marker]:hidden">
+                                            Каталог
+                                            <svg class="ml-auto size-4 transition-transform duration-200 group-open/mobile-catalog:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+                                        </summary>
+                                        <div class="ml-3 grid gap-0.5 border-l border-white/10 pl-3">
+                                            @foreach ($catalogItems as $catalogItem)
+                                                <a href="{{ $catalogItem['href'] }}" class="rounded-lg px-3 py-2 text-xs text-white/45 transition hover:bg-white/8 hover:text-white">{{ $catalogItem['label'] }}</a>
+                                            @endforeach
+                                        </div>
+                                    </details>
                                     <a href="#" class="rounded-xl px-3 py-2.5 text-white/65 hover:bg-white/8 hover:text-white">Клиенты</a>
                                     <a href="#analytics" class="rounded-xl px-3 py-2.5 text-white/65 hover:bg-white/8 hover:text-white">Аналитика</a>
                                     <a href="#" class="rounded-xl px-3 py-2.5 text-white/65 hover:bg-white/8 hover:text-white">Настройки</a>
