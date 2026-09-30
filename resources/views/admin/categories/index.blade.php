@@ -1,5 +1,5 @@
 @php
-    $categories = [
+    $local_categories = [
         [
             'name' => 'Одежда',
             'slug' => 'odezhda',
@@ -106,7 +106,7 @@
                 <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700 dark:text-lime-300">Каталог</p>
                 <div class="mt-2 flex items-center gap-3">
                     <h1 class="text-3xl font-black tracking-[-0.055em] sm:text-4xl">Категории</h1>
-                    <span class="rounded-full bg-black/6 px-2.5 py-1 text-xs font-bold text-black/45 dark:bg-white/10 dark:text-white/45">{{ count($categories) }}</span>
+                    <span class="rounded-full bg-black/6 px-2.5 py-1 text-xs font-bold text-black/45 dark:bg-white/10 dark:text-white/45">{{ count($local_categories) }}</span>
                 </div>
                 <p class="mt-2 text-sm text-black/45 dark:text-white/45">Управляйте структурой каталога и отображением разделов на витрине.</p>
             </div>
@@ -167,8 +167,42 @@
                             <th class="px-5 py-3 text-right font-bold">Действия</th>
                         </tr>
                     </thead>
+
                     <tbody class="divide-y divide-black/6 dark:divide-white/8">
                         @foreach ($categories as $category)
+                            <tr class="text-xs transition hover:bg-[#f8faf6] dark:hover:bg-white/3">
+                                <td class="px-5 py-3.5">
+                                    <div @class(['flex items-center gap-3', 'pl-6' => $category['sorting_order'] > 0])>
+                                        @if ($category['sorting_order'] > 0)
+                                            <svg class="-ml-5 size-3.5 shrink-0 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5v8a4 4 0 0 0 4 4h10m0 0-3-3m3 3-3 3" /></svg>
+                                        @endif
+                                        <img src="{{ $category['image_path_icon'] }}" alt="" class="size-11 shrink-0 rounded-xl bg-[#f3f5f2] object-cover dark:bg-zinc-800" loading="lazy">
+                                        <div class="min-w-0"><p class="truncate font-extrabold">{{ $category['name'] }}</p><p class="mt-1 truncate text-[10px] text-black/35 dark:text-white/35">/catalog/{{ $category['slug'] }}</p></div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3.5 text-black/45 dark:text-white/45">{{ $category['parent_category_id'] }}</td>
+                                <td class="px-4 py-3.5 text-center font-extrabold">{{ $category['products'] }}</td>
+                                <td class="px-4 py-3.5 text-black/45 dark:text-white/45">{{ $category['placement'] }}</td>
+                                <td class="px-4 py-3.5">
+                                    <span @class([
+                                        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold',
+                                        'bg-emerald-50 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300' => $category['active'],
+                                        'bg-zinc-100 text-zinc-500 dark:bg-white/8 dark:text-white/45' => ! $category['active'],
+                                    ])><span @class(['size-1.5 rounded-full', 'bg-emerald-500' => $category['active'], 'bg-zinc-400' => ! $category['active']])></span>{{ $category['active'] ? 'Активна' : 'Скрыта' }}</span>
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <div class="flex justify-end gap-2">
+                                        <button type="button" class="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[11px] font-bold ring-1 ring-black/10 transition hover:bg-[#17211c] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#17211c] dark:ring-white/10 dark:hover:bg-white dark:hover:text-[#17211c] dark:focus-visible:outline-white"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m14 4 6 6L8 22H2v-6L14 4Zm-3 3 6 6" /></svg>Редактировать</button>
+                                        <button type="button" class="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[11px] font-bold text-rose-600 ring-1 ring-rose-200 transition hover:bg-rose-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 dark:text-rose-400 dark:ring-rose-400/20"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M9 7V4h6v3m3 0-1 14H7L6 7m4 4v6m4-6v6" /></svg>Удалить</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+{{-- -------------------------------------------------- --}}
+                    <tbody class="divide-y divide-black/6 dark:divide-white/8">
+                        @foreach ($local_categories as $category)
                             <tr class="text-xs transition hover:bg-[#f8faf6] dark:hover:bg-white/3">
                                 <td class="px-5 py-3.5">
                                     <div @class(['flex items-center gap-3', 'pl-6' => $category['level'] > 0])>
